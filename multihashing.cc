@@ -8,6 +8,7 @@ extern "C" {
     #include "bcrypt.h"
     #include "keccak.h"
     #include "quark.h"
+    #include "scrypt.h"
     #include "scryptjane.h"
     #include "scryptn.h"
     #include "skein.h"
@@ -21,8 +22,9 @@ extern "C" {
     #include "x13.h"
     #include "nist5.h"
     #include "sha1.h"
+    #include "sha2.h"
     #include "x15.h"
-	  #include "fresh.h"
+    #include "fresh.h"
     #include "Lyra2RE.h"
 }
 
