@@ -108,6 +108,30 @@ NAN_METHOD(scrypt) {
     );
 }
 
+NAN_METHOD(scryptsquare) {
+   NanScope();
+
+   Local<Object> target = args[0]->ToObject();
+
+   if(!Buffer::HasInstance(target))
+       return THROW_ERROR_EXCEPTION("Argument should be a buffer object.");
+
+
+   unsigned int nValue = 1048576;
+   unsigned int rValue = 1;
+
+   char * input = Buffer::Data(target);
+   char output[32];
+
+   uint32_t input_len = Buffer::Length(target);
+
+   scrypt_N_R_1_256(input, output, nValue, rValue, input_len);
+
+   NanReturnValue(
+       NanNewBufferHandle(output, 32)
+    );
+}
+
 
 
 NAN_METHOD(scryptn) {
@@ -571,6 +595,7 @@ NAN_METHOD(lyra2re2) {
 void init(Handle<Object> exports) {
     exports->Set(NanNew<String>("quark"), NanNew<FunctionTemplate>(quark)->GetFunction());
     exports->Set(NanNew<String>("x11"), NanNew<FunctionTemplate>(x11)->GetFunction());
+    exports->Set(NanNew<String>("scryptsquare"), NanNew<FunctionTemplate>(scryptsquare)->GetFunction());
     exports->Set(NanNew<String>("scrypt"), NanNew<FunctionTemplate>(scrypt)->GetFunction());
     exports->Set(NanNew<String>("scryptn"), NanNew<FunctionTemplate>(scryptn)->GetFunction());
     exports->Set(NanNew<String>("scryptjane"), NanNew<FunctionTemplate>(scryptjane)->GetFunction());
